@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+@plugin "tailwindcss-animate";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: hsl(50, 100%, 95%);
+  --foreground: hsl(230, 30%, 20%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(230, 30%, 20%);
+  --primary: hsl(280, 80%, 55%);
+  --primary-foreground: hsl(50, 100%, 95%);
+  --secondary: hsl(200, 90%, 50%);
+  --secondary-foreground: hsl(50, 100%, 95%);
+  --accent: hsl(20, 90%, 55%);
+  --accent-foreground: hsl(230, 30%, 20%);
+  --muted: hsl(230, 15%, 85%);
+  --muted-foreground: hsl(230, 30%, 20%);
+  --destructive: hsl(0, 80%, 50%);
+  --destructive-foreground: hsl(50, 100%, 95%);
+  --ring: hsl(280, 80%, 55%);
+  --border: hsl(230, 20%, 50%);
+  --sidebar: hsl(200, 90%, 50%);
+  --sidebar-foreground: hsl(50, 100%, 95%);
+}
+
+.dark {
+  --background: hsl(240, 25%, 12%);
+  --foreground: hsl(50, 100%, 85%);
+  --card: hsl(240, 20%, 15%);
+  --card-foreground: hsl(50, 100%, 85%);
+  --primary: hsl(280, 80%, 65%);
+  --primary-foreground: hsl(240, 25%, 12%);
+  --secondary: hsl(200, 90%, 55%);
+  --secondary-foreground: hsl(50, 100%, 85%);
+  --accent: hsl(20, 90%, 60%);
+  --accent-foreground: hsl(50, 100%, 85%);
+  --muted: hsl(240, 15%, 20%);
+  --muted-foreground: hsl(50, 100%, 85%);
+  --destructive: hsl(0, 80%, 60%);
+  --destructive-foreground: hsl(50, 100%, 85%);
+  --ring: hsl(280, 80%, 65%);
+  --border: hsl(240, 20%, 35%);
+  --sidebar: hsl(200, 90%, 50%);
+  --sidebar-foreground: hsl(50, 100%, 85%);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.sidebar {
+  background-color: var(--sidebar);
+  color: var(--sidebar-foreground);
+}
+
+.card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.button-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.button-primary:hover {
+  filter: brightness(90%);
+}
+
+.button-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.button-secondary:hover {
+  filter: brightness(90%);
+}
+
+.button-destructive {
+  background-color: var(--destructive);
+  color: var(--destructive-foreground);
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.button-destructive:hover {
+  filter: brightness(90%);
+}

@@ -1,5 +1,5 @@
 import '@pqina/pintura/pintura.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { getEditorDefaults } from '@pqina/pintura';
 import { PinturaEditor } from '@pqina/react-pintura';
 

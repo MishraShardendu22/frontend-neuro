@@ -2,6 +2,7 @@ import axios from 'axios';
 import Loader from '../Loader';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -23,6 +24,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +40,7 @@ const Login = () => {
       if (data.Token) {
         localStorage.setItem('token', data.Token);
         toast.success('Login successful!');
-        window.location.href = '/' + `${userType}` + '/home';
+        navigate(`/${userType}/home`);
       } else {
         throw new Error('Token not received from API.');
       }

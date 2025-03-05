@@ -47,7 +47,7 @@ const ProfilePatient = () => {
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  let successMsg;
 
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),

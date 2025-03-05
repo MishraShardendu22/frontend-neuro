@@ -1,8 +1,21 @@
 import Loader from '../Loader';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { Button } from '../ui/button';
+import { useNavigate } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import axiosInstance from '@/lib/axiosInstance';
+import { AlertCircle, User, Lock, Mail, Phone, MapPin } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -15,8 +28,9 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [userType, setUserType] = useState('patient');
+  const navigate = useNavigate();
 
-  const handleRegister = async (e: { preventDefault: () => void }) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -37,7 +51,7 @@ const Register = () => {
       console.log('Registration success:', response.data);
       setMessage('Registration successful. Please proceed to login.');
       toast.success('Registration successful. Please proceed to login.');
-      window.location.href = '/login';
+      navigate('/login');
     } catch (err) {
       console.error('Registration error:', err);
       setError('Registration failed.');
@@ -52,136 +66,150 @@ const Register = () => {
   }
 
   return (
-    <div
-      style={{
-        maxWidth: '400px',
-        margin: '2rem auto',
-        padding: '1rem',
-        border: '1px solid #ccc',
-      }}
-    >
-      <h2 style={{ textAlign: 'center' }}>Register</h2>
-      <form onSubmit={handleRegister}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="userType" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            User Type
-          </label>
-          <select
-            id="userType"
-            value={userType}
-            onChange={(e) => setUserType(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-          >
-            <option className="bg-black/100" value="patient">
-              Patient
-            </option>
-            <option className="bg-black/100" value="hospital">
-              Hospital
-            </option>
-          </select>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-md shadow-lg">
+        <CardHeader className="text-center">
+          <CardTitle className="flex items-center justify-center space-x-2 mb-2">
+            <User className="w-8 h-8 text-primary" />
+            <span className="text-2xl font-bold">Register</span>
+          </CardTitle>
+          <CardDescription>Select your user type and enter your details</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleRegister} className="space-y-4">
+            <div>
+              <Label htmlFor="userType" className="flex items-center space-x-2 mb-2">
+                <User className="w-4 h-4 text-muted-foreground" />
+                <span>User Type</span>
+              </Label>
+              <Select value={userType} onValueChange={setUserType}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select user type" />
+                </SelectTrigger>
+                <SelectContent className="bg-black/100">
+                  <SelectItem value="patient">Patient</SelectItem>
+                  <SelectItem value="hospital">Hospital</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="fullName" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            Full Name
-          </label>
-          <input
-            id="fullName"
-            type="text"
-            placeholder="Enter your full name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
-        </div>
+            <div>
+              <Label htmlFor="fullName" className="flex items-center space-x-2 mb-2">
+                <User className="w-4 h-4 text-muted-foreground" />
+                <span>Full Name</span>
+              </Label>
+              <Input
+                id="fullName"
+                type="text"
+                placeholder="Enter your full name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+            </div>
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
-        </div>
+            <div>
+              <Label htmlFor="email" className="flex items-center space-x-2 mb-2">
+                <Mail className="w-4 h-4 text-muted-foreground" />
+                <span>Email</span>
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
-        </div>
+            <div>
+              <Label htmlFor="password" className="flex items-center space-x-2 mb-2">
+                <Lock className="w-4 h-4 text-muted-foreground" />
+                <span>Password</span>
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="phoneNumber" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            Phone Number
-          </label>
-          <input
-            id="phoneNumber"
-            type="text"
-            placeholder="Enter your phone number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
-        </div>
+            <div>
+              <Label htmlFor="phoneNumber" className="flex items-center space-x-2 mb-2">
+                <Phone className="w-4 h-4 text-muted-foreground" />
+                <span>Phone Number</span>
+              </Label>
+              <Input
+                id="phoneNumber"
+                type="text"
+                placeholder="Enter your phone number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                required
+              />
+            </div>
 
-        {userType === 'patient' && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label htmlFor="gender" style={{ display: 'block', marginBottom: '0.5rem' }}>
-              Gender
-            </label>
-            <select
-              id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              style={{ width: '100%', padding: '8px' }}
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-        )}
+            {userType === 'patient' && (
+              <div>
+                <Label htmlFor="gender" className="flex items-center space-x-2 mb-2">
+                  <User className="w-4 h-4 text-muted-foreground" />
+                  <span>Gender</span>
+                </Label>
+                <Select value={gender} onValueChange={setGender}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select gender" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-black/100">
+                    <SelectItem value="Male">Male</SelectItem>
+                    <SelectItem value="Female">Female</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
-        {userType === 'hospital' && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label htmlFor="address" style={{ display: 'block', marginBottom: '0.5rem' }}>
-              Address
-            </label>
-            <textarea
-              id="address"
-              placeholder="Enter hospital address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              style={{ width: '100%', padding: '8px' }}
-              required
-            ></textarea>
-          </div>
-        )}
+            {userType === 'hospital' && (
+              <div>
+                <Label htmlFor="address" className="flex items-center space-x-2 mb-2">
+                  <MapPin className="w-4 h-4 text-muted-foreground" />
+                  <span>Address</span>
+                </Label>
+                <Input
+                  id="address"
+                  type="text"
+                  placeholder="Enter hospital address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
+                />
+              </div>
+            )}
 
-        {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
-        {message && <div style={{ color: 'green', marginBottom: '1rem' }}>{message}</div>}
+            {message && (
+              <Alert variant="default">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Success</AlertTitle>
+                <AlertDescription>{message}</AlertDescription>
+              </Alert>
+            )}
 
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Processing...' : 'Register'}
-        </Button>
-      </form>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Processing...' : 'Register'}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };
